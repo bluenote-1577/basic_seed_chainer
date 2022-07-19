@@ -1,0 +1,23 @@
+[package]
+name = "basic_seed_chainer"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand = "0.8.3"
+bio = "*"
+fxhash = "*"
+block-aligner = { version = "^0.2.0", features = ["simd_avx2"] }
+libwfa = "0.1"
+
+
+[profile.release]
+opt-level = 3
+
+[profile.dev]
+opt-level = 3
+
+[profile.bench]
+debug = true
