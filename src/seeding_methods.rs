@@ -47,8 +47,8 @@ pub fn open_sync_seeds(
     k: usize,
     s: usize,
     t: usize,
-) -> (FxHashMap<&[u8], FxHashSet<usize>>, usize) {
-    let mut syncmer_seeds: FxHashMap<&[u8], FxHashSet<usize>> = FxHashMap::default();
+) -> (FxHashMap<&[u8], Vec<usize>>, usize) {
+    let mut syncmer_seeds: FxHashMap<&[u8], Vec<usize>> = FxHashMap::default();
     let mut hashes: Vec<usize> = Vec::new();
     let mut positions_selected: Vec<usize> = Vec::new();
     //hash all s-mers
@@ -62,8 +62,10 @@ pub fn open_sync_seeds(
         if min_pos - i == t - 1 {
             let pos_vec = syncmer_seeds
                 .entry(&string[i..i + k])
-                .or_insert(FxHashSet::default());
-            pos_vec.insert(i);
+                .or_insert(vec![]);
+            if !pos_vec.contains(&i){
+                pos_vec.push(i);
+            }
             positions_selected.push(i)
         }
     }
