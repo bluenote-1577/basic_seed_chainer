@@ -9,8 +9,8 @@ edition = "2018"
 rand = "0.8.3"
 bio = "*"
 fxhash = "*"
-block-aligner = { version = "^0.2.0", features = ["simd_avx2"] }
 libwfa = "0.1"
+rayon = "*"
 
 
 [profile.release]

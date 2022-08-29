@@ -83,7 +83,6 @@ pub fn get_conservation(
     k: usize,
     str_len: usize,
 ) -> (f64, f64) {
-    let mut num_spurious_matches = 0;
     let set1: FxHashSet<_> = seeds_orig.keys().cloned().collect();
     let set2: FxHashSet<_> = seeds_mut.keys().cloned().collect();
     let intersection: FxHashSet<_> = set1.intersection(&set2).collect();
@@ -104,7 +103,6 @@ pub fn get_conservation(
         }
 
         let bad_matches = positions_sp.difference(&positions_s).collect::<Vec<_>>();
-        num_spurious_matches += bad_matches.len();
         for pos in bad_matches {
             for i in 0..k {
                 spurious_positions.insert(pos + i);
@@ -185,7 +183,7 @@ pub fn get_kmers_from_string<'a>(
 
     let mut num_items = 0;
     let mut mult_items = 0;
-    for (key, value) in kmers.iter() {
+    for (_key, value) in kmers.iter() {
         num_items += 1;
         mult_items += value.len();
     }
@@ -198,7 +196,7 @@ pub fn get_kmers_from_string<'a>(
 pub fn get_conservation_gap(
     seeds_orig: FxHashMap<Vec<u8>, FxHashSet<(usize, usize)>>,
     seeds_mut: FxHashMap<Vec<u8>, FxHashSet<(usize, usize)>>,
-    k: usize,
+    _k: usize,
     str_len: usize,
 ) -> (f64, f64) {
     let mut num_spurious_matches = 0;

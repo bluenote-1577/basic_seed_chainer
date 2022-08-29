@@ -1,0 +1,516 @@
+warning: unused variable: `T`
+   --> src/seeding_methods.rs:136:9
+    |
+136 |     let T = 84;
+    |         ^ help: if this is intentional, prefix it with an underscore: `_T`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `C`
+   --> src/seeding_methods.rs:137:9
+    |
+137 |     let C = 67;
+    |         ^ help: if this is intentional, prefix it with an underscore: `_C`
+
+warning: unused variable: `n`
+   --> src/seeding_methods.rs:131:5
+    |
+131 |     n: usize,
+    |     ^ help: if this is intentional, prefix it with an underscore: `_n`
+
+warning: unused variable: `T`
+   --> src/seeding_methods.rs:191:9
+    |
+191 |     let T = 84;
+    |         ^ help: if this is intentional, prefix it with an underscore: `_T`
+
+warning: unused variable: `C`
+   --> src/seeding_methods.rs:192:9
+    |
+192 |     let C = 67;
+    |         ^ help: if this is intentional, prefix it with an underscore: `_C`
+
+warning: unused variable: `n`
+   --> src/seeding_methods.rs:186:5
+    |
+186 |     n: usize,
+    |     ^ help: if this is intentional, prefix it with an underscore: `_n`
+
+warning: unused variable: `T`
+   --> src/seeding_methods.rs:262:9
+    |
+262 |     let T = 84;
+    |         ^ help: if this is intentional, prefix it with an underscore: `_T`
+
+warning: unused variable: `C`
+   --> src/seeding_methods.rs:263:9
+    |
+263 |     let C = 67;
+    |         ^ help: if this is intentional, prefix it with an underscore: `_C`
+
+warning: unused variable: `n`
+   --> src/seeding_methods.rs:257:5
+    |
+257 |     n: usize,
+    |     ^ help: if this is intentional, prefix it with an underscore: `_n`
+
+warning: variable `num_spurious_matches` is assigned to, but never used
+  --> src/simulation_utils.rs:86:13
+   |
+86 |     let mut num_spurious_matches = 0;
+   |             ^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: consider using `_num_spurious_matches` instead
+
+warning: unused variable: `key`
+   --> src/simulation_utils.rs:188:10
+    |
+188 |     for (key, value) in kmers.iter() {
+    |          ^^^ help: if this is intentional, prefix it with an underscore: `_key`
+
+warning: unused variable: `k`
+   --> src/simulation_utils.rs:201:5
+    |
+201 |     k: usize,
+    |     ^ help: if this is intentional, prefix it with an underscore: `_k`
+
+warning: function is never used: `get_syncmer_contexts`
+   --> src/seeding_methods.rs:110:4
+    |
+110 | fn get_syncmer_contexts(string: &[u8], s: usize, k: usize, t: usize) -> FxHashSet<usize> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: variable `W` should have a snake case name
+   --> src/seeding_methods.rs:134:13
+    |
+134 |     let mut W = Vec::<[u8; 5]>::new();
+    |             ^ help: convert the identifier to snake case (notice the capitalization): `w`
+    |
+    = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `A` should have a snake case name
+   --> src/seeding_methods.rs:135:9
+    |
+135 |     let A = 65;
+    |         ^ help: convert the identifier to snake case: `a`
+
+warning: variable `T` should have a snake case name
+   --> src/seeding_methods.rs:136:9
+    |
+136 |     let T = 84;
+    |         ^ help: convert the identifier to snake case: `t`
+
+warning: variable `C` should have a snake case name
+   --> src/seeding_methods.rs:137:9
+    |
+137 |     let C = 67;
+    |         ^ help: convert the identifier to snake case (notice the capitalization): `c`
+
+warning: variable `G` should have a snake case name
+   --> src/seeding_methods.rs:138:9
+    |
+138 |     let G = 71;
+    |         ^ help: convert the identifier to snake case: `g`
+
+warning: variable `W` should have a snake case name
+   --> src/seeding_methods.rs:189:13
+    |
+189 |     let mut W = Vec::<[u8; 8]>::new();
+    |             ^ help: convert the identifier to snake case (notice the capitalization): `w`
+
+warning: variable `A` should have a snake case name
+   --> src/seeding_methods.rs:190:9
+    |
+190 |     let A = 65;
+    |         ^ help: convert the identifier to snake case: `a`
+
+warning: variable `T` should have a snake case name
+   --> src/seeding_methods.rs:191:9
+    |
+191 |     let T = 84;
+    |         ^ help: convert the identifier to snake case: `t`
+
+warning: variable `C` should have a snake case name
+   --> src/seeding_methods.rs:192:9
+    |
+192 |     let C = 67;
+    |         ^ help: convert the identifier to snake case (notice the capitalization): `c`
+
+warning: variable `G` should have a snake case name
+   --> src/seeding_methods.rs:193:9
+    |
+193 |     let G = 71;
+    |         ^ help: convert the identifier to snake case: `g`
+
+warning: variable `W` should have a snake case name
+   --> src/seeding_methods.rs:260:13
+    |
+260 |     let mut W = Vec::<[u8; 6]>::new();
+    |             ^ help: convert the identifier to snake case (notice the capitalization): `w`
+
+warning: variable `A` should have a snake case name
+   --> src/seeding_methods.rs:261:9
+    |
+261 |     let A = 65;
+    |         ^ help: convert the identifier to snake case: `a`
+
+warning: variable `T` should have a snake case name
+   --> src/seeding_methods.rs:262:9
+    |
+262 |     let T = 84;
+    |         ^ help: convert the identifier to snake case: `t`
+
+warning: variable `C` should have a snake case name
+   --> src/seeding_methods.rs:263:9
+    |
+263 |     let C = 67;
+    |         ^ help: convert the identifier to snake case (notice the capitalization): `c`
+
+warning: variable `G` should have a snake case name
+   --> src/seeding_methods.rs:264:9
+    |
+264 |     let G = 71;
+    |         ^ help: convert the identifier to snake case: `g`
+
+warning: `basic_seed_chainer` (lib) generated 28 warnings
+   Compiling basic_seed_chainer v0.1.0 (/home/jshaw/2022_basic_seed_chainer/basic_seed_chainer)
+warning: unused import: `bio::alignment::sparse::find_kmer_matches`
+ --> src/main.rs:6:5
+  |
+6 | use bio::alignment::sparse::find_kmer_matches;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `bio::scores::blosum62`
+ --> src/main.rs:7:5
+  |
+7 | use bio::scores::blosum62;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `block_aligner::cigar::*`
+ --> src/main.rs:8:5
+  |
+8 | use block_aligner::cigar::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `block_aligner::scan_block::*`
+ --> src/main.rs:9:5
+  |
+9 | use block_aligner::scan_block::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Duration`
+  --> src/main.rs:15:17
+   |
+15 | use std::time::{Duration, Instant};
+   |                 ^^^^^^^^
+
+warning: unused import: `block_aligner::scores`
+  --> src/main.rs:10:5
+   |
+10 | use block_aligner::scores::*;
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `pos_mut`
+  --> src/main.rs:62:31
+   |
+62 |                     let (s_p, pos_mut) = simulation_utils::gen_mutated_string(&s, theta);
+   |                               ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_pos_mut`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `now`
+  --> src/main.rs:65:25
+   |
+65 |                     let now = Instant::now();
+   |                         ^^^ help: if this is intentional, prefix it with an underscore: `_now`
+
+warning: unused variable: `now`
+  --> src/main.rs:73:25
+   |
+73 |                     let now = Instant::now();
+   |                         ^^^ help: if this is intentional, prefix it with an underscore: `_now`
+
+warning: unused variable: `now`
+  --> src/main.rs:88:25
+   |
+88 |                     let now = Instant::now();
+   |                         ^^^ help: if this is intentional, prefix it with an underscore: `_now`
+
+warning: value assigned to `best_f_i` is never read
+   --> src/main.rs:106:33
+    |
+106 |                         let mut best_f_i = 0. as f64;
+    |                                 ^^^^^^^^
+    |
+    = note: `#[warn(unused_assignments)]` on by default
+    = help: maybe it is overwritten before being read?
+
+warning: value assigned to `best_j` is never read
+   --> src/main.rs:107:33
+    |
+107 |                         let mut best_j = usize::MAX;
+    |                                 ^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: unused variable: `num_iter`
+   --> src/main.rs:108:33
+    |
+108 |                         let mut num_iter = 0;
+    |                                 ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_num_iter`
+
+warning: unused variable: `max_num_iter`
+   --> src/main.rs:109:33
+    |
+109 |                         let mut max_num_iter = 0;
+    |                                 ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_max_num_iter`
+
+warning: unused variable: `alignment`
+   --> src/main.rs:228:33
+    |
+228 | ...                   let alignment =
+    |                           ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_alignment`
+
+warning: unused variable: `l`
+  --> src/main.rs:60:28
+   |
+60 |                 .for_each(|l| {
+   |                            ^ help: if this is intentional, prefix it with an underscore: `_l`
+
+warning: unused variable: `zeta_sketch`
+  --> src/main.rs:47:17
+   |
+47 |             let zeta_sketch = 1. / (6. * zeta_sketch);
+   |                 ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_zeta_sketch`
+
+warning: unused variable: `length`
+   --> src/main.rs:263:17
+    |
+263 |             let length = (n as f64).powf(0.5);
+    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_length`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:108:29
+    |
+108 |                         let mut num_iter = 0;
+    |                             ----^^^^^^^^
+    |                             |
+    |                             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:109:29
+    |
+109 |                         let mut max_num_iter = 0;
+    |                             ----^^^^^^^^^^^^
+    |                             |
+    |                             help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> src/main.rs:50:17
+   |
+50 |             let mut align_times: Mutex<Vec<_>> = Mutex::new(vec![]);
+   |                 ----^^^^^^^^^^^
+   |                 |
+   |                 help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> src/main.rs:51:17
+   |
+51 |             let mut chain_times: Mutex<Vec<_>> = Mutex::new(vec![]);
+   |                 ----^^^^^^^^^^^
+   |                 |
+   |                 help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> src/main.rs:52:17
+   |
+52 |             let mut recov : Mutex<f64> = Mutex::new(0.);
+   |                 ----^^^^^
+   |                 |
+   |                 help: remove this `mut`
+
+warning: unused arithmetic operation that must be used
+   --> src/main.rs:264:13
+    |
+264 |             *recov.lock().unwrap()/num_iters  as f64 / n as f64;
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the arithmetic operation produces a value
+    |
+    = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+    |
+264 |             let _ = *recov.lock().unwrap()/num_iters  as f64 / n as f64;
+    |             +++++++
+
+warning: `basic_seed_chainer` (bin "basic_seed_chainer") generated 24 warnings
+    Finished dev [optimized + debuginfo] target(s) in 1.07s
+     Running `/home/jshaw/2022_basic_seed_chainer/basic_seed_chainer/target/debug/basic_seed_chainer`
+[src/main.rs:44] 6. * zeta = 5119.149257310535
+[src/main.rs:56] n = 1164
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 234
+[src/main.rs:189] break_length = 3
+[src/main.rs:189] break_length = 8
+[src/main.rs:189] break_length = 9
+[src/main.rs:189] break_length = 6
+[src/main.rs:189] break_length = 6
+[src/main.rs:189] break_length = 2
+[src/main.rs:189] break_length = 10
+[src/main.rs:189] break_length = 10
+[src/main.rs:189] break_length = 11
+[src/main.rs:189] break_length = 5
+[src/main.rs:189] break_length = 2
+[src/main.rs:189] break_length = 8
+[src/main.rs:189] break_length = 8
+[src/main.rs:189] break_length = 3
+[src/main.rs:189] break_length = 11
+[src/main.rs:189] break_length = 5
+[src/main.rs:189] break_length = 10
+[src/main.rs:189] break_length = 7
+[src/main.rs:189] break_length = 3
+[src/main.rs:189] break_length = 5
+[src/main.rs:189] break_length = 1
+[src/main.rs:189] break_length = 1133
+[src/main.rs:189] break_length = 8
+[src/main.rs:189] break_length = 8
+Value for k 11
+Mean align 0.000050887746
+Mean chain 0.00049328903
+[src/main.rs:44] 6. * zeta = 6414.024649544108
+[src/main.rs:56] n = 2213
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 247
+[src/main.rs:189] break_length = 8
+[src/main.rs:189] break_length = 2195
+[src/main.rs:189] break_length = 3
+[src/main.rs:189] break_length = 7
+[src/main.rs:189] break_length = 2201
+[src/main.rs:189] break_length = 13
+Value for k 12
+Mean align 0.00011674716
+Mean chain 0.00093016913
+[src/main.rs:44] 6. * zeta = 7923.916550513221
+[src/main.rs:56] n = 4205
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 264
+[src/main.rs:189] break_length = 11
+[src/main.rs:189] break_length = 4188
+[src/main.rs:189] break_length = 5
+Value for k 13
+Mean align 0.0002702631
+Mean chain 0.0017891956
+[src/main.rs:44] 6. * zeta = 9673.69145304813
+[src/main.rs:56] n = 7990
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 289
+[src/main.rs:189] break_length = 23
+[src/main.rs:189] break_length = 9
+[src/main.rs:189] break_length = 71
+[src/main.rs:189] break_length = 5
+[src/main.rs:189] break_length = 26
+Value for k 14
+Mean align 0.00061921
+Mean chain 0.0034091794
+[src/main.rs:44] 6. * zeta = 11689.478234039483
+[src/main.rs:56] n = 15181
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 323
+[src/main.rs:189] break_length = 31
+Value for k 15
+Mean align 0.0014160199
+Mean chain 0.006634374
+[src/main.rs:44] 6. * zeta = 14000.041045605642
+[src/main.rs:56] n = 28844
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 369
+[src/main.rs:189] break_length = 26
+[src/main.rs:189] break_length = 28821
+[src/main.rs:189] break_length = 65
+[src/main.rs:189] break_length = 9
+[src/main.rs:189] break_length = 16
+Value for k 16
+Mean align 0.0032183086
+Mean chain 0.013719112
+[src/main.rs:44] 6. * zeta = 16636.529482183912
+[src/main.rs:56] n = 54803
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 434
+[src/main.rs:189] break_length = 54737
+Value for k 17
+Mean align 0.0072277742
+Mean chain 0.027910138
+[src/main.rs:44] 6. * zeta = 19633.02885374921
+[src/main.rs:56] n = 104127
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 522
+[src/main.rs:189] break_length = 2
+[src/main.rs:189] break_length = 84
+[src/main.rs:189] break_length = 104008
+Value for k 18
+Mean align 0.016066065
+Mean chain 0.052833002
+[src/main.rs:44] 6. * zeta = 23026.386845027733
+[src/main.rs:56] n = 197841
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 644
+Value for k 19
+Mean align 0.03551654
+Mean chain 0.101049684
+[src/main.rs:44] 6. * zeta = 26856.857576522227
+[src/main.rs:56] n = 375899
+[src/main.rs:56] alpha = 0.037000290721888464
+[src/main.rs:56] (1. - 2. * alpha) / 2. = 0.4629997092781115
+[src/main.rs:56] m = 813
+Value for k 20
+Mean align 0.07850487
+Mean chain 0.19001509
+[src/main.rs:272] align_cum = [
+    5.0887746e-5,
+    0.00011674716,
+    0.0002702631,
+    0.00061921,
+    0.0014160199,
+    0.0032183086,
+    0.0072277742,
+    0.016066065,
+    0.03551654,
+    0.07850487,
+]
+[src/main.rs:273] chain_cum = [
+    0.00049328903,
+    0.00093016913,
+    0.0017891956,
+    0.0034091794,
+    0.006634374,
+    0.013719112,
+    0.027910138,
+    0.052833002,
+    0.101049684,
+    0.19001509,
+]
+[src/main.rs:274] recov_cum = [
+    0.9818296391752577,
+    0.9889232715770447,
+    0.9935152437574316,
+    0.9962206633291615,
+    0.9977893485277649,
+    0.9986223651365969,
+    0.9991514132438005,
+    0.999470097092973,
+    0.9997477570372167,
+    0.9998557029946874,
+]

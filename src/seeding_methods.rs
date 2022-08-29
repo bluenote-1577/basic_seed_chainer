@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+
 use fxhash::hash;
 use fxhash::{FxHashMap, FxHashSet};
 
@@ -13,8 +15,8 @@ pub fn minimizer_seeds(
     s: &[u8],
     w: usize,
     k: usize,
-) -> (FxHashMap<&[u8], FxHashSet<usize>>, usize) {
-    let mut minimizer_seeds: FxHashMap<&[u8], FxHashSet<usize>> = FxHashMap::default();
+) -> (FxHashMap<&[u8], Vec<usize>>, usize) {
+    let mut minimizer_seeds: FxHashMap<&[u8], Vec<usize>> = FxHashMap::default();
     let mut hashes: Vec<usize> = Vec::new();
     let mut positions_selected: Vec<usize> = Vec::new();
 
@@ -32,8 +34,11 @@ pub fn minimizer_seeds(
         } else {
             let pos_vec = minimizer_seeds
                 .entry(&s[min_pos..min_pos + k])
-                .or_insert(FxHashSet::default());
-            pos_vec.insert(min_pos);
+                .or_insert(vec![]);
+
+        if !pos_vec.contains(&i) {
+            pos_vec.push(min_pos);
+        }
             positions_selected.push(min_pos);
             prev_pos = min_pos;
         }
@@ -42,12 +47,30 @@ pub fn minimizer_seeds(
     return (minimizer_seeds, positions_selected.len());
 }
 
+pub fn kmer_seeds(string: &[u8], k: usize) -> (FxHashMap<&[u8], Vec<usize>>, usize) {
+    let mut kmer_seeds: FxHashMap<&[u8], Vec<usize>> = FxHashMap::default();
+    let mut positions_selected: Vec<usize> = Vec::new();
+    positions_selected.reserve(string.len());
+    for i in 0..string.len() - k + 1 {
+        let pos_vec = kmer_seeds.entry(&string[i..i + k]).or_insert(vec![]);
+        if !pos_vec.contains(&i) {
+            pos_vec.push(i);
+        }
+        positions_selected.push(i)
+    }
+
+    return (kmer_seeds, positions_selected.len());
+}
+
 pub fn open_sync_seeds(
     string: &[u8],
     k: usize,
     s: usize,
     t: usize,
 ) -> (FxHashMap<&[u8], Vec<usize>>, usize) {
+    if k-s+1 == 1{
+        return kmer_seeds(string,k);
+    }
     let mut syncmer_seeds: FxHashMap<&[u8], Vec<usize>> = FxHashMap::default();
     let mut hashes: Vec<usize> = Vec::new();
     let mut positions_selected: Vec<usize> = Vec::new();
@@ -60,10 +83,8 @@ pub fn open_sync_seeds(
     for i in 0..hashes.len() - w + 1 {
         let min_pos = position_min(&hashes[i..i + w]).unwrap() + i;
         if min_pos - i == t - 1 {
-            let pos_vec = syncmer_seeds
-                .entry(&string[i..i + k])
-                .or_insert(vec![]);
-            if !pos_vec.contains(&i){
+            let pos_vec = syncmer_seeds.entry(&string[i..i + k]).or_insert(vec![]);
+            if !pos_vec.contains(&i) {
                 pos_vec.push(i);
             }
             positions_selected.push(i)
@@ -91,7 +112,7 @@ fn get_charged_contexts(string: &[u8], w: usize, k: usize) -> FxHashSet<usize> {
     return charged_contexts;
 }
 
-fn get_syncmer_contexts(string: &[u8], s: usize, k: usize, t: usize) -> FxHashSet<usize> {
+fn _get_syncmer_contexts(string: &[u8], s: usize, k: usize, t: usize) -> FxHashSet<usize> {
     let mut hashes: Vec<usize> = Vec::new();
     let mut charged_contexts = FxHashSet::default();
     for i in 0..string.len() - s + 1 {
@@ -112,13 +133,13 @@ fn get_syncmer_contexts(string: &[u8], s: usize, k: usize, t: usize) -> FxHashSe
 
 pub fn custom_words_seeds_5_4(
     string: &[u8],
-    n: usize,
+    _n: usize,
     k: usize,
 ) -> (FxHashMap<&[u8], FxHashSet<usize>>, usize) {
     let mut W = Vec::<[u8; 5]>::new();
     let A = 65;
-    let T = 84;
-    let C = 67;
+    let _T = 84;
+    let _C = 67;
     let G = 71;
     let r = 1;
     let y = 2;
@@ -167,13 +188,13 @@ pub fn custom_words_seeds_5_4(
 
 pub fn custom_words_seeds_8_8(
     string: &[u8],
-    n: usize,
+    _n: usize,
     k: usize,
 ) -> (FxHashMap<&[u8], FxHashSet<usize>>, usize) {
     let mut W = Vec::<[u8; 8]>::new();
     let A = 65;
-    let T = 84;
-    let C = 67;
+    let _T = 84;
+    let _C = 67;
     let G = 71;
     let r = 1;
     let y = 2;
@@ -186,13 +207,12 @@ pub fn custom_words_seeds_8_8(
         "yyryyryy", "yyyryyyr", "yyyryyyy", "yyyyyyyr",
     ];
 
-    for w in words_set{
-        let mut topush = [0,0,0,0,0,0,0,0];
-        for (i,c) in w.chars().enumerate(){
-            if c == 'r'{
+    for w in words_set {
+        let mut topush = [0, 0, 0, 0, 0, 0, 0, 0];
+        for (i, c) in w.chars().enumerate() {
+            if c == 'r' {
                 topush[i] = 1;
-            }
-            else{
+            } else {
                 topush[i] = 2;
             }
         }
@@ -239,13 +259,13 @@ pub fn custom_words_seeds_8_8(
 
 pub fn custom_words_seeds_6_4(
     string: &[u8],
-    n: usize,
+    _n: usize,
     k: usize,
 ) -> (FxHashMap<&[u8], FxHashSet<usize>>, usize) {
     let mut W = Vec::<[u8; 6]>::new();
     let A = 65;
-    let T = 84;
-    let C = 67;
+    let _T = 84;
+    let _C = 67;
     let G = 71;
     let r = 1;
     let y = 2;
