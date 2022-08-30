@@ -57,6 +57,7 @@ name = "basic_seed_chainer"
 version = "0.1.0"
 dependencies = [
  "bio",
+ "clap",
  "fxhash",
  "libwfa",
  "rand",

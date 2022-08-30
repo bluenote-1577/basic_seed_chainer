@@ -11,6 +11,7 @@ bio = "*"
 fxhash = "*"
 libwfa = "0.1"
 rayon = "*"
+clap = "2.3"
 
 
 [profile.release]

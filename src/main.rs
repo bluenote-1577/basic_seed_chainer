@@ -3,6 +3,7 @@ use basic_seed_chainer::avl_tree;
 use basic_seed_chainer::seeding_methods;
 use basic_seed_chainer::simulation_utils;
 use bio::alignment::pairwise::*;
+use clap::{App, Arg, SubCommand};
 use libwfa::{affine_wavefront::*, bindings::*, mm_allocator::*, penalties::*};
 use rayon::prelude::*;
 use std::cmp;
@@ -11,24 +12,71 @@ use std::sync::Mutex;
 use std::time::Instant;
 
 fn main() {
+    let matches = App::new("basic_seed_chainer")
+        .version("0.1")
+        .about("Basic seed chain extend aligner on simulated sequences.")
+        .arg(
+            Arg::with_name("sketch")
+                .short("s")
+                .help("Use sketching. Default density is 1/(k - 6) where k = C log n"),
+        )
+        .arg(
+            Arg::with_name("minimizer")
+                .short("m")
+                .help("Use minimizers instead of open syncmers"),
+        )
+        .arg(
+            Arg::with_name("wfa")
+                .long("wfa")
+                .help("Use wavefront aligner instead of standard DP for extension"),
+        )
+        .arg(
+            Arg::with_name("substring")
+                .long("substring")
+                .help("The mutated string is a substring instead of a full string. Default m = sqrt(n) + 200 where n is the sequence length"),
+        )
+        .arg(
+            Arg::with_name("num_iter")
+                .help("Number of iterations per value of k")
+                .required(true)
+                .takes_value(true)
+                .index(1),
+        )
+        .arg(
+            Arg::with_name("k")
+                .short("k")
+                .takes_value(true)
+                .help("Maximum value of k"),
+        )
+        .arg(
+            Arg::with_name("theta")
+                .required(true)
+                .index(2)
+                .takes_value(true)
+                .help("Value of mutation rate theta"),
+        )
+        .get_matches();
     let print_all_debug = false;
-    let use_minimizers = false;
-    let use_wfa = true;
-    let sketch = false;
-    let m_is_substring = false;
-    let num_iters = 2000;
+    let use_minimizers = matches.is_present("minimizer");
+    let use_wfa = matches.is_present("wfa");
+    let sketch = matches.is_present("sketch");
+    let m_is_substring = matches.is_present("substring");
+    let num_iters = matches.value_of("num_iter").unwrap().parse::<usize>().unwrap();
+    let max_k = matches.value_of("k").unwrap_or("20").parse::<usize>().unwrap();
+    let th = matches.value_of("theta").unwrap().parse::<f64>().unwrap();
+    let thetas = vec![th];
     rayon::ThreadPoolBuilder::new()
         .num_threads(20)
         .build_global()
         .unwrap();
-    for theta in [0.05] {
-        let mut align_cum = vec![];
-        let mut recov_cum = vec![];
-        let mut chain_cum = vec![];
+    for theta in thetas {
+        let mut align_cumulative = vec![];
+        let mut recov_cumulative = vec![];
+        let mut chain_cumulative = vec![];
         let alpha = -((1.0 - theta) as f64).log(4.0);
         let _C = 2. / (1. - 2. * alpha);
+        let ks = 11..max_k;
         println!("Theta = {}, alpha = {}, C = {}", theta, alpha, _C);
-        let ks = 11..17;
         //        let ks = 11..17;
         for k in ks {
             let k = k as usize;
@@ -63,7 +111,7 @@ fn main() {
                 zeta = zeta_inter;
             }
             let zeta = zeta * w;
-//            let zeta = 0.;
+            //            let zeta = 0.;
 
             let align_times: Mutex<Vec<_>> = Mutex::new(vec![]);
             let chain_times: Mutex<Vec<_>> = Mutex::new(vec![]);
@@ -79,11 +127,7 @@ fn main() {
                 m = n as usize;
             }
             let offset = 1000000;
-            println!(
-                "n = {},  m = {}",
-                n,
-                m
-            );
+            println!("n = {},  m = {}", n, m);
             (0..num_iters)
                 .collect::<Vec<usize>>()
                 .into_par_iter()
@@ -269,7 +313,7 @@ fn main() {
                         }
                         let mut rec = recov.lock().unwrap();
                         if break_length > 0 {
-                            if print_all_debug{
+                            if print_all_debug {
                                 dbg!(break_length);
                             }
                         }
@@ -339,15 +383,15 @@ fn main() {
 
             let recov_val = *recov.lock().unwrap() / num_iters as f64 / m as f64;
             println!("Value for k {}", k);
-            println!("Mean recov for k {} is {}", k, recov_val);
-            println!("Mean align {}", align_mean / num_iters as f32);
-            println!("Mean chain {}", chain_mean / num_iters as f32);
-            align_cum.push(align_mean / num_iters as f32);
-            chain_cum.push(chain_mean / num_iters as f32);
-            recov_cum.push(recov_val);
+            println!("Mean recoverability for k {} is {}", k, recov_val);
+            println!("Mean extend time {}", align_mean / num_iters as f32);
+            println!("Mean chain time {}", chain_mean / num_iters as f32);
+            align_cumulative.push(align_mean / num_iters as f32);
+            chain_cumulative.push(chain_mean / num_iters as f32);
+            recov_cumulative.push(recov_val);
         }
-        dbg!(align_cum);
-        dbg!(chain_cum);
-        dbg!(recov_cum);
+        dbg!(align_cumulative);
+        dbg!(chain_cumulative);
+        dbg!(recov_cumulative);
     }
 }
