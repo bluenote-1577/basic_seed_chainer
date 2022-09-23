@@ -5,7 +5,7 @@ a mutated version of the random string with error rate theta, and aligns them vi
 
 The value of the k-mers is increasing as `k = C log n` where `n` is the sequence length, and `C` is defined to be `2/(1 - 2 * alpha)` where `alpha = -log (1 - theta)` with log base 4. We simulate alignments for `k = 10, 11, 12, 13, ...` up to a user specified value. Other simulation parameters can be specified and are outlined below. For a quick overview of the algorithm:
 
-**Seeding**: using open syncmer or minimizer seeds. NOTE: We use fxhash for k-mer hashing instead of a rolling hash so it's not as fast as it could be. 
+**Seeding**: using open syncmer or minimizer seeds. NOTE: We don't use any sort of bitwise streaming for representing k-mers/fast processing so collecting seeds is very slow. 
 
 **Chaining**: using a linear gap cost with a MRQ data structure as described in the minigraph paper.
 
