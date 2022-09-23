@@ -1,4 +1,5 @@
 use crate::avl_tree::SearchTree;
+use statistical;
 use basic_seed_chainer::avl_tree;
 use basic_seed_chainer::seeding_methods;
 use basic_seed_chainer::simulation_utils;
@@ -18,7 +19,7 @@ fn main() {
         .arg(
             Arg::with_name("sketch")
                 .short("s")
-                .help("Use sketching. Default density is 1/(k - 6) where k = C log n"),
+                .help("Use sketching. Default density is 1/(k - 6) where k = C log n (default no sketching)"),
         )
         .arg(
             Arg::with_name("minimizer")
@@ -33,7 +34,7 @@ fn main() {
         .arg(
             Arg::with_name("substring")
                 .long("substring")
-                .help("The mutated string is a substring instead of a full string. Default m = sqrt(n) + 200 where n is the sequence length"),
+                .help("The mutated string is a substring instead of a full string (default align two full strings). m = sqrt(n) + 200 where n is the sequence length"),
         )
         .arg(
             Arg::with_name("num_iter")
@@ -46,7 +47,13 @@ fn main() {
             Arg::with_name("k")
                 .short("k")
                 .takes_value(true)
-                .help("Maximum value of k"),
+                .help("Maximum value of k (default 20, minimum k is 10)"),
+        )
+        .arg(
+            Arg::with_name("threads")
+                .short("t")
+                .takes_value(true)
+                .help("Number of threads (default 20)"),
         )
         .arg(
             Arg::with_name("theta")
@@ -63,19 +70,22 @@ fn main() {
     let m_is_substring = matches.is_present("substring");
     let num_iters = matches.value_of("num_iter").unwrap().parse::<usize>().unwrap();
     let max_k = matches.value_of("k").unwrap_or("20").parse::<usize>().unwrap();
+    let threads = matches.value_of("threads").unwrap_or("20").parse::<usize>().unwrap();
     let th = matches.value_of("theta").unwrap().parse::<f64>().unwrap();
     let thetas = vec![th];
     rayon::ThreadPoolBuilder::new()
-        .num_threads(20)
+        .num_threads(threads)
         .build_global()
         .unwrap();
     for theta in thetas {
-        let mut align_cumulative = vec![];
+        let mut history_align = vec![];
+        let mut history_chain = vec![];
+        let mut extend_cumulative = vec![];
         let mut recov_cumulative = vec![];
         let mut chain_cumulative = vec![];
         let alpha = -((1.0 - theta) as f64).log(4.0);
         let _C = 2. / (1. - 2. * alpha);
-        let ks = 11..max_k;
+        let ks = 9..max_k;
         println!("Theta = {}, alpha = {}, C = {}", theta, alpha, _C);
         //        let ks = 11..17;
         for k in ks {
@@ -378,20 +388,30 @@ fn main() {
                         .unwrap()
                         .push(now.elapsed().as_secs_f32());
                 });
-            let align_mean = align_times.into_inner().unwrap().into_iter().sum::<f32>();
-            let chain_mean = chain_times.into_inner().unwrap().into_iter().sum::<f32>();
+            let mut align_times = align_times.into_inner().unwrap();
+            let mut chain_times = chain_times.into_inner().unwrap();
+            let align_mean = align_times.iter().sum::<f32>();
+            let chain_mean = chain_times.iter().sum::<f32>();
+            history_align.push(align_times);
+            history_chain.push(chain_times);
 
             let recov_val = *recov.lock().unwrap() / num_iters as f64 / m as f64;
             println!("Value for k {}", k);
             println!("Mean recoverability for k {} is {}", k, recov_val);
             println!("Mean extend time {}", align_mean / num_iters as f32);
             println!("Mean chain time {}", chain_mean / num_iters as f32);
-            align_cumulative.push(align_mean / num_iters as f32);
+            extend_cumulative.push(align_mean / num_iters as f32);
             chain_cumulative.push(chain_mean / num_iters as f32);
             recov_cumulative.push(recov_val);
         }
-        dbg!(align_cumulative);
-        dbg!(chain_cumulative);
-        dbg!(recov_cumulative);
+        let mut extend_std = vec![];
+        for (i,times) in history_align.iter().enumerate(){
+            extend_std.push(statistical::standard_deviation(times,Some(extend_cumulative[i])));
+
+        }
+        println!("extend_cumulative = {:?}", extend_cumulative);
+        println!("chain_cumulative = {:?}", chain_cumulative);
+        println!("recov_cumulative = {:?}", recov_cumulative);
+        println!("extend_std = {:?}", extend_std);
     }
 }

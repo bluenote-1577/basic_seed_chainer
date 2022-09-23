@@ -1,6 +1,10 @@
 extern crate rand;
 use std::fmt::Debug;
 
+//Modified from 
+//https://github.com/gabi-250/rust-avl-tree
+//to include MRQ algorithms. 
+
 /// A node inside a `SearchTree`.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Node<T: PartialEq + Debug> {

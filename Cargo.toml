@@ -12,6 +12,7 @@ fxhash = "*"
 libwfa = "0.1"
 rayon = "*"
 clap = "2.3"
+statistical = "*"
 
 
 [profile.release]
