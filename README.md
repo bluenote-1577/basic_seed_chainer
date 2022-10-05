@@ -3,7 +3,7 @@
 Experiments for TODO by implementing a basic seed-chain-extend algorithm with sketching in rust. The program generates a random string,
 a mutated version of the random string with error rate theta, and aligns them via seed-chain-extend. Running times and recoverability (as defined in our paper) are output after the experiments are run. 
 
-The value of the k-mers is increasing as `k = C log n` where `n` is the sequence length, and `C` is defined to be `2/(1 - 2 * alpha)` where `alpha = -log (1 - theta)` with log base 4. We simulate alignments for `k = 10, 11, 12, 13, ...` up to a user specified value. Other simulation parameters can be specified and are outlined below. For a quick overview of the algorithm:
+The value of the k-mers is increasing as `k = C log n` where `n` is the sequence length, and `C` is defined to be `2/(1 - 2 * alpha)` where `alpha = -log (1 - theta)` with log base 4. We simulate alignments for `k = 9, 10, 11, 12, 13, ...` up to a user specified value. Other simulation parameters can be specified and are outlined below. For a quick overview of the algorithm:
 
 **Seeding**: using open syncmer or minimizer seeds. NOTE: We don't use any sort of bitwise algorithms for representing k-mers. We have not optimized for k-mer matching, seeding, etc so it will be slow.  
 
