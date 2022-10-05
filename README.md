@@ -20,7 +20,7 @@ git clone https://github.com/bluenote-1577/basic_seed_chainer
 cd basic_seed_chainer
 cargo build --release
 ./target/release/basic_seed_chainer -h
-#10 iterations at theta 0.05 for k = 11,...,19
+#10 iterations at theta 0.05 for k = 9,...,19
 ./taget/release/basic_seed_chainer 10 0.05 
 ```
 
