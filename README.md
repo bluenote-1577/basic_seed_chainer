@@ -1,4 +1,4 @@
-# basic_seed_chainer
+# Seed-chain-extend simulations on random, mutating strings
 
 Experiments for TODO by implementing a basic seed-chain-extend algorithm with sketching in rust. The program generates a random string,
 a mutated version of the random string with error rate theta, and aligns them via seed-chain-extend. Running times and recoverability (as defined in our paper) are output after the experiments are run. 
