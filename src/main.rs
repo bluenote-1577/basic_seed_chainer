@@ -1,5 +1,4 @@
 use crate::avl_tree::SearchTree;
-use statistical;
 use basic_seed_chainer::avl_tree;
 use basic_seed_chainer::seeding_methods;
 use basic_seed_chainer::simulation_utils;
@@ -7,6 +6,7 @@ use bio::alignment::pairwise::*;
 use clap::{App, Arg, SubCommand};
 use libwfa::{affine_wavefront::*, bindings::*, mm_allocator::*, penalties::*};
 use rayon::prelude::*;
+use statistical;
 use std::cmp;
 use std::str;
 use std::sync::Mutex;
@@ -68,9 +68,21 @@ fn main() {
     let use_wfa = matches.is_present("wfa");
     let sketch = matches.is_present("sketch");
     let m_is_substring = matches.is_present("substring");
-    let num_iters = matches.value_of("num_iter").unwrap().parse::<usize>().unwrap();
-    let max_k = matches.value_of("k").unwrap_or("20").parse::<usize>().unwrap();
-    let threads = matches.value_of("threads").unwrap_or("20").parse::<usize>().unwrap();
+    let num_iters = matches
+        .value_of("num_iter")
+        .unwrap()
+        .parse::<usize>()
+        .unwrap();
+    let max_k = matches
+        .value_of("k")
+        .unwrap_or("20")
+        .parse::<usize>()
+        .unwrap();
+    let threads = matches
+        .value_of("threads")
+        .unwrap_or("20")
+        .parse::<usize>()
+        .unwrap();
     let th = matches.value_of("theta").unwrap().parse::<f64>().unwrap();
     let thetas = vec![th];
     rayon::ThreadPoolBuilder::new()
@@ -81,7 +93,7 @@ fn main() {
         let mut history_align = vec![];
         let mut history_chain = vec![];
         let mut extend_cumulative = vec![];
-        let mut recov_cumulative = vec![];
+        let mut lower_recov_cumulative = vec![];
         let mut chain_cumulative = vec![];
         let alpha = -((1.0 - theta) as f64).log(4.0);
         let _C = 2. / (1. - 2. * alpha);
@@ -109,7 +121,8 @@ fn main() {
                 * (n as f64).log(4.)
                 * (n as f64).ln()
                 * ((1. - theta) as f64).powi(-(k as i32));
-            let zeta_sketch_inter = zeta_inter * 4. + 2.;
+            let zeta_sketch_inter = zeta_inter * 4. * 3. / 2.
+                + 8. * zeta_inter / ((1. - theta) as f64).powi(-(k as i32));
             let zeta_inter = 1. / (6. * zeta_inter);
             //            dbg!(6. * 1. / zeta);
             //            let zeta = 0.00;
@@ -397,21 +410,33 @@ fn main() {
 
             let recov_val = *recov.lock().unwrap() / num_iters as f64 / m as f64;
             println!("Value for k {}", k);
-            println!("Mean recoverability for k {} is {}", k, recov_val);
+            println!(
+                "Mean lower bound for recoverability for k {} is {}",
+                k, recov_val
+            );
             println!("Mean extend time {}", align_mean / num_iters as f32);
             println!("Mean chain time {}", chain_mean / num_iters as f32);
             extend_cumulative.push(align_mean / num_iters as f32);
             chain_cumulative.push(chain_mean / num_iters as f32);
-            recov_cumulative.push(recov_val);
+            lower_recov_cumulative.push(recov_val);
         }
         let mut extend_std = vec![];
-        for (i,times) in history_align.iter().enumerate(){
-            extend_std.push(statistical::standard_deviation(times,Some(extend_cumulative[i])));
-
+        for (i, times) in history_align.iter().enumerate() {
+            extend_std.push(statistical::standard_deviation(
+                times,
+                Some(extend_cumulative[i]),
+            ));
         }
-        println!("extend_cumulative = {:?}", extend_cumulative);
-        println!("chain_cumulative = {:?}", chain_cumulative);
-        println!("recov_cumulative = {:?}", recov_cumulative);
-        println!("extend_std = {:?}", extend_std);
+        if !sketch {
+            println!("extend_cumulative = {:?}", extend_cumulative);
+            println!("chain_cumulative = {:?}", chain_cumulative);
+            println!("lower_recov_cumulative = {:?}", lower_recov_cumulative);
+            println!("extend_std = {:?}", extend_std);
+        } else {
+            println!("extend_cumulative_sketch = {:?}", extend_cumulative);
+            println!("chain_cumulative_sketch = {:?}", chain_cumulative);
+            println!("lower_recov_cumulative_sketch = {:?}", lower_recov_cumulative);
+            println!("extend_std_sketch = {:?}", extend_std);
+        }
     }
 }
