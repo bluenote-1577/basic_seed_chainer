@@ -34,7 +34,7 @@ One can specify a few parameters for the simulation described by the `basic_seed
 
 ### Results
 Outputs are of the following form:
-``[src/main.rs:400] extend_cumulative = [
+``extend_cumulative = [
     9.04046e-5,
     0.0001350113,
     0.00023640381,
@@ -48,3 +48,7 @@ Outputs are of the following form:
 ]``
 
 where the mean runtimes over all iterations of `k` are output. Cumulative chaining times and also recoverability are output. 
+
+## Plotting results
+
+The results output from basic_seed_chainer can be input into the provided jupyter notebook and visualized. 
