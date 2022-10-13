@@ -1,9 +1,9 @@
-# basic_seed_chainer
+# Seed-chain-extend simulations on random, mutating strings
 
 Experiments for TODO by implementing a basic seed-chain-extend algorithm with sketching in rust. The program generates a random string,
 a mutated version of the random string with error rate theta, and aligns them via seed-chain-extend. Running times and recoverability (as defined in our paper) are output after the experiments are run. 
 
-The value of the k-mers is increasing as `k = C log n` where `n` is the sequence length, and `C` is defined to be `2/(1 - 2 * alpha)` where `alpha = -log (1 - theta)` with log base 4. We simulate alignments for `k = 10, 11, 12, 13, ...` up to a user specified value. Other simulation parameters can be specified and are outlined below. For a quick overview of the algorithm:
+The value of the k-mers is increasing as `k = C log n` where `n` is the sequence length, and `C` is defined to be `2/(1 - 2 * alpha)` where `alpha = -log (1 - theta)` with log base 4. We simulate alignments for `k = 9, 10, 11, 12, 13, ...` up to a user specified value. Other simulation parameters can be specified and are outlined below. For a quick overview of the algorithm:
 
 **Seeding**: using open syncmer or minimizer seeds. NOTE: We don't use any sort of bitwise algorithms for representing k-mers. We have not optimized for k-mer matching, seeding, etc so it will be slow.  
 
@@ -20,7 +20,7 @@ git clone https://github.com/bluenote-1577/basic_seed_chainer
 cd basic_seed_chainer
 cargo build --release
 ./target/release/basic_seed_chainer -h
-#10 iterations at theta 0.05 for k = 11,...,19
+#10 iterations at theta 0.05 for k = 9,...,19
 ./taget/release/basic_seed_chainer 10 0.05 
 ```
 
@@ -34,7 +34,7 @@ One can specify a few parameters for the simulation described by the `basic_seed
 
 ### Results
 Outputs are of the following form:
-``[src/main.rs:400] extend_cumulative = [
+``extend_cumulative = [
     9.04046e-5,
     0.0001350113,
     0.00023640381,
@@ -48,3 +48,7 @@ Outputs are of the following form:
 ]``
 
 where the mean runtimes over all iterations of `k` are output. Cumulative chaining times and also recoverability are output. 
+
+## Plotting results
+
+The results output from basic_seed_chainer can be input into the provided jupyter notebook and visualized. 
